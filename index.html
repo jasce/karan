@@ -7,9 +7,67 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 </head>
-<body>
+<style >
+	.list-m{
+		padding: 10px 15px 10px 0px;
+		list-style: none;
+	}
+	ul{
+		background-color: #fafafa;
+	}
+</style>
+<body ng-app = "karan">
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+		<p style="padding: 10px;"></p>
+			<h3> Candidate Email(s) <span><a href="" style="float: right;font-size: 18px; ">Upload a CSV</a></span></h3>
+			<p style="padding: 10px;"></p>
+			<form ng-controller = "emailController" >
+			<div class=" input-group">
+			<input placeholder ="Enter email addresses" class="form-control input-lg" 
+			type="email"
+			 name="email"
+			 ng-model="email">
+			<span class="input-group-addon"><a href="" class=" btn-lg" ng-click = "addEmail(email);">Add</a></span>
+			</div>
+			<br>
+			<ul >
+				<li  ng-repeat = "mail in emails track by $index" class="list-m"> {{ mail}}  <span ><button type="button" class="close" ng-click="deleteEmail(mail)">&times;</button></span></li>
+			</ul>
+			<input type="checkbox"  name="me"><span style="font-size: 105%;">&nbsp;<b>Send copy to myself</b></span>
+			<a href="" style="float: right;"> Advanced Settings</a><br><br>
 
+			<a href="" class="btn btn-success">{{'Send '+ emails.length + ' Invites'}}</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script >
+	var karan = angular.module("karan", [])
+	.controller('emailController', function($scope){
+		$scope.emails = [];
+		$scope.email;
+		
+		
+		$scope.addEmail = function(email){
+			$scope.emails.push(email);
+			$scope.email = "";
+		}
+		$scope.deleteEmail = function(email){
+			for (var i=$scope.emails.length-1; i>=0; i--) {
+				    if ($scope.emails[i] === email) {
+				        $scope.emails.splice(i, 1);
+				         break;      
+				    }
+				}
+		}
+
+	});
+</script>
 </body>
 </html>
